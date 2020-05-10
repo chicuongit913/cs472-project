@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+
+
+
+    <!--    Hello Servlet home page     -->
+    <servlet>
+        <servlet-name>Index</servlet-name>
+        <servlet-class>controllers.IndexController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Index</servlet-name>
+        <url-pattern>/index</url-pattern>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+
+    <!--    About Us servlet    -->
+    <servlet>
+        <servlet-name>AboutUs</servlet-name>
+        <servlet-class>controllers.AboutUsController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AboutUs</servlet-name>
+        <url-pattern>/about-us</url-pattern>
+    </servlet-mapping>
+
+    <!--    TakeTour servlet    -->
+    <servlet>
+        <servlet-name>VirtualTour</servlet-name>
+        <servlet-class>controllers.VirtualTourController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>VirtualTour</servlet-name>
+        <url-pattern>/virtual-tour</url-pattern>
+    </servlet-mapping>
+
+    <!--    TakeTour servlet    -->
+    <servlet>
+        <servlet-name>Book</servlet-name>
+        <servlet-class>controllers.BookController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Book</servlet-name>
+        <url-pattern>/book</url-pattern>
+    </servlet-mapping>
+
+    <!--    Filter Hit Count servlet    -->
+    <filter>
+        <filter-name>GateWayFilter</filter-name>
+        <filter-class>filters.GateWayFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>GateWayFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+
+</web-app>
