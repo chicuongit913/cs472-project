@@ -2,7 +2,7 @@
 <%@taglib prefix="template" tagdir="/WEB-INF/tags" %>
 
 <template:layout>
-    <div class="container">
+    <div class="container-fluid">
         <h1 id="homepage-header" class="display-4 pt-3 pb-3">Welcome to the eLibrary&reg;</h1>
         <img class="img-fluid mb-2" src="./assets/images/lib-banner.jpg">
         <p>

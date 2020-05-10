@@ -1,6 +1,5 @@
-<footer class="footer">
+<footer>
     <div class="container-fluid">
-        <span class="text-muted float-left">Chi Cuong - 611111 ::: CS472-WAP</span>
-        <span class="text-muted float-right">&copy; May 2020</span>
+        <p class="copyright">&copy; CS-472 ::: Covid-333 <a href="https://www.miu.edu" target="_blank">Maharishi International University</a>. All Rights Reserved.</p>
     </div>
 </footer>

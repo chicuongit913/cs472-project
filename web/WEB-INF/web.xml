@@ -51,6 +51,17 @@
         <url-pattern>/book</url-pattern>
     </servlet-mapping>
 
+    <!--    Login servlet    -->
+    <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>controllers.auths.LoginController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/auth/login</url-pattern>
+    </servlet-mapping>
+
     <!--    Filter Hit Count servlet    -->
     <filter>
         <filter-name>GateWayFilter</filter-name>

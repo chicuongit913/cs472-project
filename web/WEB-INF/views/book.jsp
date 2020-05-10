@@ -6,7 +6,7 @@
     </jsp:attribute>
 
     <jsp:body>
-        <div class="container">
+        <div class="container-fluid">
             <div class="row" >
                 <div class="col-12" >
                     <h1 id="homepage-header" class="display-4 pt-3 pb-3 float-left border-0">Book in our Collection</h1>
