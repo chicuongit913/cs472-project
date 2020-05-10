@@ -1,4 +1,4 @@
-# BIG DATA TECHNOLOGY #
+#CS472 - WAP - Project #
 
 #### Project Name: Hotel management system
 #### Professor:  Obinna Kalu
