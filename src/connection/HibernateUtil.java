@@ -1,5 +1,6 @@
 package connection;
 
+import models.BookingModel;
 import models.UserModel;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -38,6 +39,7 @@ public class HibernateUtil {
 
                 configuration.setProperties(settings);
                 configuration.addAnnotatedClass(UserModel.class);
+                configuration.addAnnotatedClass(BookingModel.class);
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
