@@ -25,6 +25,7 @@
           <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/lib/mysql-connector-java-8.0.13.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/lib/protobuf-java-3.6.1.jar" />
           <element id="library" level="project" name="javax.xml.bind:jaxb-api:2.3.1" />
+          <element id="library" level="project" name="commons-codec:commons-codec:1.11" />
         </element>
       </element>
     </root>

@@ -7,6 +7,11 @@ import org.hibernate.Transaction;
 
 import models.UserModel;
 import connection.HibernateUtil;
+import org.hibernate.query.Query;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  * CRUD database operations
@@ -67,7 +72,6 @@ public class UserRepository {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start a transaction
             transaction = session.beginTransaction();
-            System.out.println("adasdasds");
             // Delete a user object
             UserModel user = session.get(UserModel.class, id);
             if (user != null) {
@@ -78,7 +82,6 @@ public class UserRepository {
             // commit transaction
             transaction.commit();
         } catch (Exception e) {
-            System.out.println("bbbbbbbbbbbbb");
             if (transaction != null) {
                 transaction.rollback();
             }
@@ -100,6 +103,40 @@ public class UserRepository {
             transaction = session.beginTransaction();
             // get an user object
             user = session.get(UserModel.class, id);
+            // commit transaction
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    /**
+     * Get User By EMAIL
+     * @param email
+     * @return
+     */
+    public UserModel getUserByEmail(String email) {
+
+        Transaction transaction = null;
+        UserModel user = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // start a transaction
+            transaction = session.beginTransaction();
+            // get an user object
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<UserModel> cr = cb.createQuery(UserModel.class);
+            Root<UserModel> root = cr.from(UserModel.class);
+            cr.select(root).where(cb.equal(root.get("email"), email));
+            Query<UserModel> query = session.createQuery(cr);
+            query.setMaxResults(1);
+            List<UserModel> result = query.getResultList();
+            if(result.size() == 1) {
+                user = result.get(0);
+            }
             // commit transaction
             transaction.commit();
         } catch (Exception e) {

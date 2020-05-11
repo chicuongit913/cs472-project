@@ -19,4 +19,8 @@ public class UserService {
     public void deleteUser(int id) {
         this.userRepository.deleteUser(id);
     }
+
+    public UserModel getUserByEmail(String email){
+        return this.userRepository.getUserByEmail(email);
+    }
 }
