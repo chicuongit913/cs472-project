@@ -19,15 +19,6 @@ public class IndexController extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserService us = new UserService();
-
-        List<UserModel> users = us.getAllUser();
-
-
-        for (UserModel user : users) {
-            System.out.println(user.getName());
-            System.out.println(user.getEmail());
-        }
         request.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(request, response);
     }
 }

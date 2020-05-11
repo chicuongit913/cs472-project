@@ -28,6 +28,9 @@ public class UserModel {
     @Column(name="password")
     protected String password;
 
+    @Column(name="image")
+    protected String image;
+
     public UserModel() {
     }
 
@@ -78,4 +81,13 @@ public class UserModel {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
 }

@@ -12,19 +12,27 @@
                                 <div class="logo text-center"><img src="${pageContext.request.contextPath}/assets/images/logo.png" alt="HMS Logo"></div>
                                 <p class="lead">Login to your account</p>
                             </div>
-                            <div class="validate-message" >
-                                <c:if test="${requestScope.messages.get('login')}">
-                                    <div class="text-danger" >${requestScope.messages.get('login')}</div>
-                                </c:if>
-                            </div>
+                            <c:if test="${requestScope['errorMessages'] != null}">
+                                <div class="validate-message margin-top-20 margin-bottom-20" >
+                                    <c:choose>
+                                        <c:when test="${requestScope['errorMessages'] != null}">
+                                            <c:forEach var="message" items="${requestScope.errorMessages}">
+                                                <div class="text-danger" >
+                                                    <c:out value="${message}"/>
+                                                </div>
+                                            </c:forEach>
+                                        </c:when>
+                                    </c:choose>
+                                </div>
+                            </c:if>
                             <form class="form-auth-small" method="post" action="${pageContext.request.contextPath}/auth/login">
                                 <div class="form-group">
                                     <label for="signin-email" class="control-label sr-only">Email</label>
-                                    <input required type="email" class="form-control" id="signin-email" value="ch.nguyen@miu.edu" name="email" placeholder="Email">
+                                    <input required type="email" class="form-control" id="signin-email" name="email" placeholder="Email">
                                 </div>
                                 <div class="form-group">
                                     <label for="signin-password" class="control-label sr-only">Password</label>
-                                    <input required type="password" class="form-control" id="signin-password" value="123456" name="password" placeholder="Password">
+                                    <input required type="password" class="form-control" id="signin-password" name="password" placeholder="Password">
                                 </div>
                                 <div class="form-group clearfix">
                                     <label class="fancy-checkbox element-left">

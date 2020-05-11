@@ -1,5 +1,7 @@
 package filters;
 
+import models.UserModel;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +36,10 @@ public class GateWayFilter implements Filter {
         boolean loginRequest = req.getRequestURI().equals(loginURI);
 
         if (loggedIn || loginRequest || !this.isServletRequest(req)) {
+            if(loggedIn) {
+                UserModel user =  (UserModel) session.getAttribute("user");
+                request.setAttribute("user", user);
+            }
             chain.doFilter(request, response);
         } else {
             response.sendRedirect(loginURI);

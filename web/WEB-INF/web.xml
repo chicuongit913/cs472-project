@@ -18,28 +18,6 @@
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
 
-    <!--    About Us servlet    -->
-    <servlet>
-        <servlet-name>AboutUs</servlet-name>
-        <servlet-class>controllers.AboutUsController</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>AboutUs</servlet-name>
-        <url-pattern>/about-us</url-pattern>
-    </servlet-mapping>
-
-    <!--    TakeTour servlet    -->
-    <servlet>
-        <servlet-name>VirtualTour</servlet-name>
-        <servlet-class>controllers.VirtualTourController</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>VirtualTour</servlet-name>
-        <url-pattern>/virtual-tour</url-pattern>
-    </servlet-mapping>
-
     <!--    TakeTour servlet    -->
     <servlet>
         <servlet-name>Book</servlet-name>
