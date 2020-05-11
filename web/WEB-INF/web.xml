@@ -62,6 +62,17 @@
         <url-pattern>/auth/login</url-pattern>
     </servlet-mapping>
 
+    <!--    logout servlet    -->
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>controllers.auths.LogoutController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/auth/logout</url-pattern>
+    </servlet-mapping>
+
     <!--    Filter Hit Count servlet    -->
     <filter>
         <filter-name>GateWayFilter</filter-name>

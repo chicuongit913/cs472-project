@@ -1,6 +1,6 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="brand">
-        <a href="/hotel/index"><img src="./assets/images/logo.png" alt="HMS Logo" class="img-responsive logo"></a>
+        <a href="${pageContext.request.contextPath}/hotel/index"><img src="${pageContext.request.contextPath}/assets/images/logo.png" alt="HMS Logo" class="img-responsive logo"></a>
     </div>
     <div class="container-fluid">
         <div class="navbar-btn">
@@ -20,7 +20,7 @@
                         <li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
                         <li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
                         <li><a href="#"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
-                        <li><a href="#"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
+                        <li><a href="${pageContext.request.contextPath}/auth/logout"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
                     </ul>
                 </li>
                 <!-- <li>
