@@ -1,5 +1,7 @@
 package models;
 
+import controllers.api.BookingAPI;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -85,5 +87,31 @@ public class BookingModel {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (null == obj) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof BookingModel)) {
+            return false;
+        }
+        BookingModel bookingModel = (BookingModel)obj;
+        return this.id == bookingModel.getId()
+                && this.roomNumber.equals(bookingModel.getRoomNumber())
+                && this.guestID.equals(bookingModel.getGuestID());
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Booking number: %d" +
+                "Room: %s" +
+                "Guest: %s" +
+                "Check in: %s" +
+                "Check out: %s", this.id, this.roomNumber, this.guestID, this.checkIn, this.checkOut);
     }
 }

@@ -32,4 +32,6 @@ public class BookingService {
         this.bookingRepository.updateBooking(booking);
     }
 
+    public BookingModel getBooking(int confirmationNumber){return this.bookingRepository.getBooking(confirmationNumber);}
+
 }

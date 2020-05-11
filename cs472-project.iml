@@ -161,5 +161,6 @@
     <orderEntry type="library" name="commons-codec:commons-codec:1.11" level="project" />
     <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
     <orderEntry type="library" name="com.google.code.gson:gson:2.8.6" level="project" />
+    <orderEntry type="library" name="com.fasterxml.jackson.core:jackson-databind:2.2.3" level="project" />
   </component>
 </module>

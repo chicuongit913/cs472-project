@@ -85,7 +85,7 @@ public class BookingRepository {
     /**
      * Get Booking By Confirmation# / ID
      * @param id
-     * @return
+     * @return BookingModel
      */
     public BookingModel getBooking(int id) {
 
@@ -94,7 +94,7 @@ public class BookingRepository {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start a transaction
             transaction = session.beginTransaction();
-            // get an user object
+            // get an booking object
             booking = session.get(BookingModel.class, id);
             // commit transaction
             transaction.commit();

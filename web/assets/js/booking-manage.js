@@ -1,7 +1,7 @@
 "use strict";
 $(document).ready(function () {
     getListBooking();
-    $("#new-booking").on("submit",addNewBook);
+    $("#new-booking").on("submit",addNewBooking);
 });
 
 function getListBooking() {
@@ -26,11 +26,15 @@ function generateListBooking(data) {
     }
 }
 
-function addNewBook(e) {
+function addNewBooking(e) {
     e.preventDefault();
-    let bookData = getNewBookData($(this));
+    let bookingData = getNewBookingData($(this));
     let that = $(this);
-    $.ajax("https://elibraryrestapi.herokuapp.com/elibrary/api/book/add",
+    let progressBar = that.find(".modal-footer .progress");
+    let submitButton = that.find("button[type='submit']");
+    submitButton.text("Saving...");
+    progressBar.removeClass("hide");
+    $.ajax("http://127.0.0.1:8080/hotel/booking-api",
         {
             "crossDomain": true,
             "method": "POST",
@@ -39,20 +43,23 @@ function addNewBook(e) {
                 "cache-control": "no-cache"
             },
             "processData": false,
-            "data": JSON.stringify(bookData),
+            "data": JSON.stringify(bookingData),
             "dataType": "json"
         }
     ).done(function (data) {
-        $("#tbl-list-book tbody").html(getListBook());
+        $("#tbl-list-book tbody").html(getListBooking());
     }).fail(function () {
         console.log("something went wrong!")
     }).always(function() {
-        document.getElementById("add-new-book").reset();
+        document.getElementById("new-booking").reset();
+        console.log("Always");
+        progressBar.addClass("hide");
+        submitButton.text("Save");
     });
     return false;
 }
 
-function getNewBookData(that) {
+function getNewBookingData(that) {
     let bookDataArray = that.serializeArray();
     let bookData = {};
     $.map(bookDataArray, function(n, i){
