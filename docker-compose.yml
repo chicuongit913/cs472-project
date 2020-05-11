@@ -2,7 +2,7 @@ version: "2.1"
 services:
 
   project-app:
-    image: tomcat
+    image: tomcat:jdk8
     container_name: project-app
     restart: on-failure:3
     volumes:
@@ -10,6 +10,8 @@ services:
       - ./out/artifacts/hotel/:/usr/local/tomcat/webapps
     ports:
       - "8080:8080"
+    environment:
+      JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n
 
   project-mysql:
     container_name: project-mysql
