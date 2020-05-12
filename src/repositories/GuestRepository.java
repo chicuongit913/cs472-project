@@ -18,11 +18,11 @@ import javax.persistence.criteria.Root;
  */
 public class GuestRepository {
     /**
-     * Save Guest
+     * Create Guest
      *
      * @param guest
      */
-    public void saveGuest(GuestModel guest) {
+    public void createGuest(GuestModel guest) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start a transaction
@@ -49,7 +49,7 @@ public class GuestRepository {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start a transaction
             transaction = session.beginTransaction();
-            // save the guest object
+            // update the guest object
             session.update(guest);
             // commit transaction
             transaction.commit();
