@@ -22,8 +22,8 @@ public class BookingAPI extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         BookingService bookingService = new BookingService();
-        BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
 
+        BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
         String json = "";
         json = br.readLine();
         ObjectMapper mapper = new ObjectMapper();

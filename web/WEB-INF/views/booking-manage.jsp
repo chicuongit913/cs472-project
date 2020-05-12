@@ -10,6 +10,7 @@
 <template:layout>
     <jsp:attribute name="javascript">
         <script src="./assets/js/booking-manage.js" type="text/javascript"></script>
+        <script src="./assets/js/klorofil-common.js" type="text/javascript"></script>
     </jsp:attribute>
 
     <jsp:body>
