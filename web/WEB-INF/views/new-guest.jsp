@@ -43,7 +43,9 @@
                             </div>
                         </div>
                         <button type="submit" class="btn btn-outline-primary">Save</button>
-                        <button type="reset" class="btn btn-outline-danger" aria-label="Close" aria-hidden="true" data-dismiss="modal">Close</button>
+                        <button type="reset" class="btn btn-outline-danger" aria-label="Close" aria-hidden="true"
+                                data-dismiss="modal">Close
+                        </button>
                     </div>
                 </div>
             </div>

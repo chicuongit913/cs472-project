@@ -5,7 +5,7 @@ $(document).ready(function () {
     $("#new-booking-modal").on("shown.bs.modal", function () {
         getGuestList();
     });
-    $("#new-guest [type='reset']").on("click", function(){
+    $("#new-guest [type='reset']").on("click", function () {
         $("#new-guest")[0].reset();
         //document.getElementById("new-guest").reset();
     });
