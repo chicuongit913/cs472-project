@@ -95,6 +95,28 @@
         <url-pattern>/api/guest</url-pattern>
     </servlet-mapping>
 
+    <!--    room servlet    -->
+    <servlet>
+        <servlet-name>Room</servlet-name>
+        <servlet-class>controllers.RoomController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Room</servlet-name>
+        <url-pattern>/room</url-pattern>
+    </servlet-mapping>
+
+    <!--    room API servlet    -->
+    <servlet>
+        <servlet-name>RoomAPI</servlet-name>
+        <servlet-class>controllers.api.RoomAPI</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RoomAPI</servlet-name>
+        <url-pattern>/api/room</url-pattern>
+    </servlet-mapping>
+
     <!--    Filter Hit Count servlet    -->
     <filter>
         <filter-name>GateWayFilter</filter-name>
