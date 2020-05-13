@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/vendor/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/vendor/linearicons/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/vendor/chartist/css/chartist-custom.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/vendor/dropzone-5.7.0/dropzone.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/vendor/waitMe/waitMe.css">
     <!-- MAIN CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css">
 

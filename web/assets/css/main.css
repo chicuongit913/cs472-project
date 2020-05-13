@@ -1751,4 +1751,42 @@ ul.activity-timeline > li {
     width: 22px;
     border: 1px solid #CCC; }
 
+  #dropzone-custom{
+    height: 156px;
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 156px;
+    padding: 0;
+    position: relative;
+    top: -30px;
+    float: left
+  }
+
+  #upload-image{
+    margin-left: 20px;
+    margin-top: 30px;
+  }
+
+  input#image {
+    visibility: hidden;
+  }
+
+  table tbody.emptyBody {
+    min-height: 100px;
+    display: block;
+  }
+
+  #block-room-image-upload{
+    position: relative;
+  }
+
+#block-room-image-upload #room-image {
+  max-width: 155px;
+  position: absolute;
+  left: 0;
+  z-index: 1;
+  max-height: 155px;
+}
+
 /*# sourceMappingURL=main.css.map */

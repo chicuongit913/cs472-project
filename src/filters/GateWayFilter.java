@@ -40,7 +40,7 @@ public class GateWayFilter implements Filter {
                 UserModel user =  (UserModel) session.getAttribute("user");
                 request.setAttribute("user", user);
             }
-            chain.doFilter(request, response);
+            chain.doFilter(req, response);
         } else {
             response.sendRedirect(loginURI);
         }

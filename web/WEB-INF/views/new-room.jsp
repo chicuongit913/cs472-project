@@ -41,15 +41,20 @@
                             <textarea required type="text" class="form-control" name="description" id="description"></textarea>
                         </div>
 
-                        <div class="form-group">
+                        <div id="block-room-image-upload" class="form-group">
                             <label for="description" class="col-form-label">Image</label>
-                            <input type="file" class="form-control" name="images" id="images"/>
+
+                            <input type="text" class="form-control" name="image" id="image"/>
+                            <img id="room-image" class="hide" src="">
+                            <div class="dropzone" id="dropzone-custom" ></div>
+                            <button type="button" id="upload-image" class="btn btn-info">Choose file</button>
                         </div>
+                        <div class="clearfix"></div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="reset" class="btn btn-outline-danger" data-dismiss="modal">Reset</button>
-                    <button type="submit" class="btn btn-outline-primary">Save</button>
+                    <button type="reset" class="btn" data-dismiss="modal">Reset</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </div>
         </form>

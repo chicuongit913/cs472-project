@@ -117,6 +117,21 @@
         <url-pattern>/api/room</url-pattern>
     </servlet-mapping>
 
+    <!--    Image Upload API servlet    -->
+    <servlet>
+        <servlet-name>UploadImageAPI</servlet-name>
+        <servlet-class>controllers.api.UploadImageAPI</servlet-class>
+        <multipart-config>
+            <max-file-size>3145728</max-file-size>
+            <max-request-size>5242880</max-request-size>
+        </multipart-config>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UploadImageAPI</servlet-name>
+        <url-pattern>/api/upload-image</url-pattern>
+    </servlet-mapping>
+
     <!--    Filter Hit Count servlet    -->
     <filter>
         <filter-name>GateWayFilter</filter-name>
@@ -128,5 +143,4 @@
         <url-pattern>/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
-
 </web-app>

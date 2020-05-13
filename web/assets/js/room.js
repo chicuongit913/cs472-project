@@ -1,10 +1,16 @@
 "use strict";
+let dropZoneUploadImage = false;
 $(document).ready(function () {
-    getListBooking();
-    $("#new-booking").on("submit",addNewBooking);
+    getListRoom();
+    $("#form-new-room").on("submit",uploadImage);
+    initUploadFile();
+    $("#tbl-list-room").on("click", ".btn-edit-room", editRoom)
 });
 
-function getListBooking() {
+function getListRoom() {
+    $("#tbl-list-room tbody").addClass("emptyBody");
+    $("#tbl-list-room tbody").waitMe();
+    $("#tbl-list-room tbody").html("");
     $.ajax("/hotel/api/room",
         {
             type: "GET"
@@ -13,6 +19,26 @@ function getListBooking() {
         $("#tbl-list-room tbody").html(generateListRoom(data));
     }).fail(function () {
         console.log("something went wrong!")
+    }).always(function() {
+        $("#tbl-list-room tbody").waitMe("hide");
+        $("#tbl-list-room tbody").removeClass("emptyBody");
+    });
+}
+
+function editRoom() {
+    $("#tbl-list-room tbody").waitMe();
+    let roomId = $(this).data("room-id");
+    $.ajax("/hotel/api/room?room-id="+roomId,
+        {
+            type: "GET"
+        }
+    ).done(function (data) {
+        console.log(data);
+    }).fail(function () {
+        console.log("something went wrong!")
+    }).always(function() {
+        $("#tbl-list-room tbody").waitMe("hide");
+        $("#tbl-list-room tbody").removeClass("emptyBody");
     });
 }
 
@@ -26,15 +52,14 @@ function generateListRoom(data) {
     }
 }
 
-function addNewBooking(e) {
-    e.preventDefault();
-    let bookingData = getNewBookingData($(this));
-    let that = $(this);
-    let progressBar = that.find(".modal-footer .progress");
-    let submitButton = that.find("button[type='submit']");
+function addNewRoom() {
+
+    let formRoom = $("#form-new-room");
+    let roomData = getNewRoomData(formRoom);
+    formRoom.find(".modal-body").waitMe();
+    let submitButton = formRoom.find("button[type='submit']");
     submitButton.text("Saving...");
-    progressBar.removeClass("hide");
-    $.ajax("http://127.0.0.1:8080/hotel/booking-api",
+    $.ajax("/hotel/api/room",
         {
             "crossDomain": true,
             "method": "POST",
@@ -43,27 +68,69 @@ function addNewBooking(e) {
                 "cache-control": "no-cache"
             },
             "processData": false,
-            "data": JSON.stringify(bookingData),
+            "data": JSON.stringify(roomData),
             "dataType": "json"
         }
     ).done(function (data) {
-        $("#tbl-list-book tbody").html(getListBooking());
+        $("#tbl-list-room tbody").html(getListRoom());
     }).fail(function () {
         console.log("something went wrong!")
     }).always(function() {
-        document.getElementById("new-booking").reset();
-        console.log("Always");
-        progressBar.addClass("hide");
-        submitButton.text("Save");
+        document.getElementById("form-new-room").reset();
+        submitButton.text("Submit");
+        $("#modal-new-room").modal("hide");
+        formRoom.find(".modal-body").waitMe("hide");
+        $("#room-image").removeClass("hide");
     });
-    return false;
 }
 
-function getNewBookingData(that) {
-    let bookDataArray = that.serializeArray();
-    let bookData = {};
-    $.map(bookDataArray, function(n, i){
-        bookData[n['name']] = n['value'];
+function getNewRoomData(that) {
+    let roomDataArray = that.serializeArray();
+    let roomData = {};
+    $.map(roomDataArray, function(n, i){
+        roomData[n['name']] = n['value'];
     });
-    return bookData;
+    return roomData;
+}
+
+function initUploadFile() {
+    Dropzone.options.dropzoneCustom = {
+        autoProcessQueue: false,
+        url: '/hotel/api/upload-image',
+        maxFiles: 1,
+        maxfilesexceeded: function(file) {
+            this.removeAllFiles();
+            this.addFile(file);
+        },
+        init: function () {
+
+            dropZoneUploadImage = this;
+
+            this.on('success', function(file, xhr, formData) {
+                let args = Array.prototype.slice.call(arguments);
+                $("#image").val(args[1].fileName);
+                $("#room-image").attr("src", args[1].fileName);
+                $("#room-image").removeClass("hide");
+                dropZoneUploadImage.removeAllFiles();
+                addNewRoom();
+            });
+
+            this.on('addedfile', function(file, xhr, formData) {
+                $("#room-image").addClass("hide");
+            });
+        }
+    }
+
+    $("#upload-image").on("click", function (argument) {
+        $('.dropzone').get(0).click();
+    });
+}
+
+function uploadImage(e) {
+    e.preventDefault();
+    if(dropZoneUploadImage.files.length)
+        dropZoneUploadImage.processQueue();
+    else
+        addNewRoom();
+    return false;
 }

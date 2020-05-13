@@ -40,9 +40,19 @@ public class    RoomAPI extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RoomService roomService = new RoomService();
-        List<RoomModel> listRoom = roomService.getAllRoom();
-        String json =this.gson.toJson(listRoom);
+        String roomId = request.getParameter("roomId");
+        String json = "";
+        if(roomId == null){
+            RoomService roomService = new RoomService();
+            List<RoomModel> listRoom = roomService.getAllRoom();
+            json =this.gson.toJson(listRoom);
+        } else {
+            RoomService roomService = new RoomService();
+            RoomModel room = roomService.getRoom(Integer.parseInt(roomId));
+            json =this.gson.toJson(room);
+        }
+
+
         PrintWriter out = response.getWriter();
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

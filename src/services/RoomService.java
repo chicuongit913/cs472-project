@@ -32,6 +32,6 @@ public class RoomService {
         this.roomRepository.updateRoom(room);
     }
 
-    public RoomModel getRoom(int confirmationNumber){return this.roomRepository.getRoom(confirmationNumber);}
+    public RoomModel getRoom(int id){return this.roomRepository.getRoom(id);}
 
 }

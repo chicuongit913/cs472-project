@@ -48,8 +48,8 @@
                     <td>$ {{price}}</td>
                     <td>{{image}}</td>
                     <td>
-                        <button data-room-id="{{id}}" class="btn btn-sm btn-info"><i class="lnr lnr-pencil"></i> Edit </button>
-                        <button data-room-id="{{id}}" class="btn btn-sm btn-danger"><i class="lnr lnr-trash"></i> Delete </button>
+                        <button data-room-id="{{id}}" class="btn btn-edit-room btn-sm btn-info"><i class="lnr lnr-pencil"></i> Edit </button>
+                        <button data-room-id="{{id}}" class="btn btn-delete-room btn-sm btn-danger"><i class="lnr lnr-trash"></i> Delete </button>
                     </td>
                 </tr>
             {{/each}}
