@@ -31,7 +31,9 @@
                             <th scope="col">Guest</th>
                             <th scope="col">Check in</th>
                             <th scope="col">Check out</th>
-                            <th scope="col">Status</th>
+                            <th scope="col">Total Night</th>
+                            <th scope="col">Total Price</th>
+                            <th scope="col"></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -50,7 +52,14 @@
                 <td>{{guestID}}</td>
                 <td>{{checkIn}}</td>
                 <td>{{checkOut}}</td>
-                <td>{{status}}</td>
+                <td>{{numberOfNight}}</td>
+                <td>{{totalPrice}}$</td>
+                <td>
+                    <button type="button" class="btn btn-primary update-booking">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+                    <button type="button" class="btn btn-danger delete-booking">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                </td>
             </tr>
             {{/each}}
         </script>

@@ -1,36 +1,47 @@
 "use strict";
+let guests;
+let rooms;
+
 $(document).ready(function () {
     getListBooking();
-    $("#new-booking").on("submit",addNewBooking);
+    $("#new-booking").on("submit", addNewBooking);
     $("#new-booking-modal").on("shown.bs.modal", function () {
-       getListOfRoom();
+        getListOfRoom();
+        getListOfGuest();
     });
-    $("#searchGuest").on("keyup", function() {
-        let value = $(this).val().toLowerCase();
-        $(".dropdown-menu li").filter(function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-    });
-    $(".dropdown.search-guest ul.dropdown-menu li a").click(function(){
-        const val = $(this).html();
-        $("#guestID").val(val);
-    });
-
-    $("#checkOut").change(function (e) {
+    $("#checkOut").change(function () {
         let bookingData = {};
-        bookingData.checkIn = $("#checkIn").val();
-        bookingData.checkOut = $("#checkOut").val();
+        bookingData.checkIn = new Date($("#checkIn").val());
+        bookingData.checkOut = new Date($(this).val());
         validationForm(bookingData);
-    })
+        let nights = Math.round((bookingData.checkOut.getTime() - bookingData.checkIn.getTime()) / (1000 * 3600 * 24))
+        if (nights < 0) {
+            nights = 0;
+        } else if (nights === 0) {
+            nights = 1;
+        }
+        $("#numberOfNight").val(nights);
+    });
 });
 
 function getListBooking() {
-    $.ajax("http://127.0.0.1:8080/hotel/api/booking",
+    $.ajax("/hotel/api/booking",
         {
             type: "GET"
         }
     ).done(function (data) {
         $("#tbl-list-booking tbody").html(generateListBooking(data));
+        $("button.delete-booking").click(function () {
+            const that = $(this);
+            const tr = that.parents("tr");
+            const tdId = tr.find("td")[0];
+            const id = $(tdId).html();
+            console.log(id);
+        });
+        $("button.update-booking").click(function () {
+            const that = $(this);
+            $("#new-booking-modal").modal("show");
+        })
     }).fail(function () {
         notification('error', 'Loading Booking Failed', 'Something went wrong! Please check the connection');
     });
@@ -50,15 +61,15 @@ function addNewBooking(e) {
     e.preventDefault();
     let bookingData = getNewBookingData($(this));
     if (!validationForm(bookingData)) {
-        return  false;
+        return false;
     }
-
+    delete bookingData.roomPrice;
     let that = $(this);
     let progressBar = that.find(".modal-footer .progress");
     let submitButton = that.find("button[type='submit']");
     submitButton.text("Saving...");
     progressBar.removeClass("hide");
-    $.ajax("http://127.0.0.1:8080/hotel/api/booking",
+    $.ajax("/hotel/api/booking",
         {
             "crossDomain": true,
             "method": "POST",
@@ -73,10 +84,11 @@ function addNewBooking(e) {
     ).done(function (data) {
         $("#tbl-list-book tbody").html(getListBooking());
         $("#new-booking").trigger("reset");
+        $("#generateGuestInfo").html("");
         notification('success', 'Booking Added', 'Successfully');
     }).fail(function () {
         notification('error', 'Booking Failed', 'Something went wrong! Please check the booking data');
-    }).always(function() {
+    }).always(function () {
         progressBar.addClass("hide");
         submitButton.text("Save");
     });
@@ -101,36 +113,58 @@ function notification(type, header, content) {
     toastr.options.positionClass = 'toast-bottom-right';
 
     switch (type) {
-        case 'info': toastr.info(content, header); break;
-        case 'success': toastr.success(content, header); break;
-        case 'warning': toastr.warning(content, header); break;
-        case 'error': toastr.error(content, header); break;
+        case 'info':
+            toastr.info(content, header);
+            break;
+        case 'success':
+            toastr.success(content, header);
+            break;
+        case 'warning':
+            toastr.warning(content, header);
+            break;
+        case 'error':
+            toastr.error(content, header);
+            break;
     }
 }
 
 function validationForm(bookingData) {
-    if (new Date(bookingData.checkOut) < new Date(bookingData.checkIn)) {
+    if (bookingData.checkOut < bookingData.checkIn) {
         notification('error', 'Check-out date invalid', 'Check-out date is later than check-in date');
         return false;
     }
+    return true;
 }
 
 function getListOfRoom() {
-    $.ajax("http://127.0.0.1:8080/hotel/api/room",
+    $.ajax("/hotel/api/room",
         {
             type: "GET"
         }
     ).done(function (data) {
-        initialRoomInputGroup(data);
-
+        initialInputGroup("findRoom", "row-room-template", "number", ".dropdown.find-room ul.dropdown-menu", data, "roomNumber");
+        rooms = data;
     }).fail(function () {
         notification('error', 'Loading Rooms Failed', 'Something went wrong! Please check the connection');
     });
 }
 
-function generateListOfRoom(data) {
-    if(data.length) {
-        let template = $("#row-room-template").html();
+function getListOfGuest() {
+    $.ajax("/hotel/api/guest",
+        {
+            type: "GET"
+        }
+    ).done(function (data) {
+        initialInputGroup("searchGuest", "row-guest-template", "id", ".dropdown.search-guest ul.dropdown-menu", data, "guestID");
+        guests = data;
+    }).fail(function () {
+        notification('error', 'Loading Rooms Failed', 'Something went wrong! Please check the connection');
+    });
+}
+
+function generateListOfData(data, scripID) {
+    if (data.length) {
+        let template = $(scripID).html();
         let compiledTemplate = Template7.compile(template);
         return compiledTemplate({"items": data});
     } else {
@@ -138,40 +172,48 @@ function generateListOfRoom(data) {
     }
 }
 
-function initialRoomInputGroup(data) {
-    const handleRoomSelection = (new Promise(function (resolve, reject) {
-        const inputSearch = `
-                            <input class="form-control" id="findRoom" type="text" placeholder="Search.."/>
-                            <script type="text/template" id="row-room-template">
-                                {{#each items}}
-                                <li><a href="#">{{number}}</a></li>
-                                {{/each}}
-                            </script>`;
-        const dropdownMenuFindRoom = $(".dropdown.find-room ul.dropdown-menu");
-        dropdownMenuFindRoom.html("");
-        dropdownMenuFindRoom.append(inputSearch);
-        dropdownMenuFindRoom.append(generateListOfRoom(data));
-        $("#findRoom").on("keyup", function() {
-            let value = $(this).val().toLowerCase();
-            $(".dropdown-menu li").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
+function initialInputGroup(inputId, scriptID, propertyMapping, dropdownMenuQuery, data, mappingField) {
+    const inputSearch = `
+                       <input class="form-control" id="${inputId}" type="text" placeholder="Search.."/>
+                        <script type="text/template" id="${scriptID}">
+                            {{#each items}}
+                            <li><a href="#">{{${propertyMapping}}}</a></li>
+                            {{/each}}
+                        </script>`;
+    const ulDropdownMenu = $(dropdownMenuQuery);
+    ulDropdownMenu.html("");
+    ulDropdownMenu.append(inputSearch);
+    ulDropdownMenu.append(generateListOfData(data, `#${scriptID}`));
+    $("#findRoom").on("keyup", function () {
+        let value = $(this).val().toLowerCase();
+        $(".dropdown-menu li").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
-        if ($(".dropdown.find-room ul.dropdown-menu li a").length > 0) {
-            resolve(true);
-        } else {
-            reject(true);
-        }
-    }));
-    handleRoomSelection.then(function (resolve) {
-        if(resolve) {
-            $(".dropdown.find-room ul.dropdown-menu li a").click(function(){
-                const val = $(this).html();
-                $("#roomNumber").val(val);
-            });
-        }
-    }, function (rejectedResult) {
-        if(rejectedResult) {}
-        notification("error", "ERROR", "Loading room failed");
     });
+    $(dropdownMenuQuery + " li a").click(function () {
+        const val = $(this).html();
+        $(`#${mappingField}`).val(val);
+        let componentID;
+        if (mappingField === "roomNumber") {
+            componentID = "#roomPrice";
+        } else if (mappingField === "guestID") {
+            componentID = "#generateGuestInfo";
+        }
+        generateDetailValue(val, componentID);
+    });
+}
+
+function generateDetailValue(data, componentId) {
+    if (componentId === "#roomPrice") {
+        let room = rooms.filter(r => r.number === data).pop();
+        $(componentId).val(room.price);
+        let nights = $("#numberOfNight").val();
+        if (room.price > 0 && nights > 0) {
+            const totalPrice = parseInt(room.price) * parseInt(nights);
+            $("#totalPrice").val(totalPrice);
+        }
+    } else {
+        let guest = guests.filter(g => g.id === parseInt(data)).pop();
+        $(componentId).html(`${guest.firstName} ${guest.lastName} || ${guest.phoneNumber}`);
+    }
 }

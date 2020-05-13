@@ -26,19 +26,13 @@ public class BookingModel {
     @Column(name="checkOut")
     protected Date checkOut;
 
-    @Column(name="status")
-    protected String status;
+    @Column(name="numberOfNight")
+    protected int numberOfNight;
+
+    @Column(name="totalPrice")
+    protected float totalPrice;
 
     public BookingModel() {
-    }
-
-    public BookingModel(String roomNumber, String guestID, Date checkIn, Date checkOut, String status) {
-        super();
-        this.roomNumber = roomNumber;
-        this.guestID = guestID;
-        this.checkIn = checkIn;
-        this.checkOut = checkOut;
-        this.status = status;
     }
 
     public int getId() {
@@ -81,12 +75,20 @@ public class BookingModel {
         this.checkOut = checkOut;
     }
 
-    public String getStatus() {
-        return status;
+    public int getNumberOfNight() {
+        return numberOfNight;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setNumberOfNight(int numberOfNight) {
+        this.numberOfNight = numberOfNight;
+    }
+
+    public float getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(float totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     @Override

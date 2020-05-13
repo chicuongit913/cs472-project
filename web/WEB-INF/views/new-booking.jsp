@@ -25,21 +25,17 @@
 
                     <div class="form-group row">
                         <label for="guestID" class="col-form-label col-sm-2">*Guest</label>
-                        <div class="col-sm-6">
+                        <div class="col-sm-2">
                             <input required type="text" class="form-control" name="guestID" id="guestID"/>
                         </div>
+                        <div id="generateGuestInfo" class="col-sm-4"></div>
                         <div class="dropdown search-guest col-sm-4">
                             <button class="btn btn-primary dropdown-toggle"
                                     type="button" data-toggle="dropdown">Search Guest<span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
                                 <input class="form-control" id="searchGuest" type="text" placeholder="Search.."/>
-                                <li><a href="#">G001</a></li>
-                                <li><a href="#">V002</a></li>
-                                <li><a href="#">G002</a></li>
-                                <li><a href="#">V002</a></li>
-                                <li><a href="#">G102</a></li>
-                                <li><a href="#">V111</a></li>
+                                <%-- contented redered in javascript --%>
                             </ul>
                         </div>
                     </div>
@@ -47,7 +43,7 @@
                     <div class="form-group row">
                         <label for="roomNumber" class="col-form-label col-sm-2">*Room</label>
                         <div class="col-sm-6">
-                            <input required type="text" class="form-control" name="roomNumber" id="roomNumber">
+                            <input required type="text" class="form-control" name="roomNumber" id="roomNumber" readonly>
                         </div>
                         <div class="dropdown find-room col-sm-4">
                             <button class="btn btn-primary dropdown-toggle"
@@ -59,21 +55,19 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="status" class="col-sm-2 col-form-label">Status</label>
-                        <div class="col-sm-4">
-                            <div class="dropdown">
-                                <select class="form-control" id="status" name="status">
-                                    <option value="AVAILABLE">AVAILABLE</option>
-                                    <option value="PENDING">PENDING</option>
-                                    <option value="CONFIRMED">CONFIRMED</option>
-                                    <option value="COMPLETED">COMPLETED</option>
-                                </select>
-                            </div>
+                        <label for="numberOfNight" class="col-sm-2 col-form-label">Number of Night</label>
+                        <div class="col-sm-2">
+                            <input type="number" class="form-control" id="numberOfNight" name="numberOfNight" placeholder="0" readonly>
                         </div>
 
                         <label for="roomPrice" class="col-sm-2 col-form-label">Room Price</label>
-                        <div class="col-sm-4">
-                            <input type="number" class="form-control" id="roomPrice" name="roomPrice" placeholder="100.00">
+                        <div class="col-sm-2">
+                            <input type="number" class="form-control" id="roomPrice" name="roomPrice" placeholder="100.00" readonly>
+                        </div>
+
+                        <label for="totalPrice" class="col-sm-2 col-form-label">Total Price</label>
+                        <div class="col-sm-2">
+                            <input type="number" class="form-control" id="totalPrice" name="totalPrice" placeholder="100.00" readonly>
                         </div>
                     </div>
 
