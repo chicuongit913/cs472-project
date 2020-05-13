@@ -23,20 +23,32 @@ public class    RoomAPI extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RoomService roomService = new RoomService();
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
-
+        String action = request.getParameter("action");
         String json = "";
-        json = br.readLine();
-        ObjectMapper mapper = new ObjectMapper();
-        RoomModel newRoom = mapper.readValue(json, RoomModel.class);
-        RoomModel room = roomService.getRoom(newRoom.getId());
-        if (newRoom.equals(room)){
-           roomService.updateRoom(newRoom);
+
+        if(action != null && action.equals("delete")) {
+            String roomId = request.getParameter("roomId");
+            roomService.deleteRoom(Integer.parseInt(roomId));
+            json = "{\"status\": \"succes\"}";
+            PrintWriter out = response.getWriter();
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            out.print(json);
+            out.flush();
         } else {
-            roomService.newRoom(newRoom);
+            json = br.readLine();
+            ObjectMapper mapper = new ObjectMapper();
+            RoomModel newRoom = mapper.readValue(json, RoomModel.class);
+            RoomModel room = roomService.getRoom(newRoom.getId());
+            if (newRoom.getId() != 0){
+                roomService.updateRoom(newRoom);
+            } else {
+                roomService.newRoom(newRoom);
+            }
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            mapper.writeValue(response.getOutputStream(),newRoom);
         }
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        mapper.writeValue(response.getOutputStream(),newRoom);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

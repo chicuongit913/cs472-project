@@ -1,4 +1,4 @@
-<div class="modal fade" id="modal-new-room" tabindex="-1" role="dialog" aria-labelledby="addBook" aria-hidden="true">
+<div class="modal fade" id="modal-new-room" tabindex="-1" role="dialog" aria-labelledby="addRoom" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <form id="form-new-room">
             <div class="modal-content">
@@ -11,6 +11,7 @@
                 <div class="modal-body">
 
                     <div class="form-row" >
+                        <input type="text" class="form-control" name="id" id="roomId">
                         <div class="form-group">
                             <label for="number" class="col-form-label">*Room No.</label>
                             <input required type="text" class="form-control" name="number" id="number">
@@ -58,5 +59,18 @@
                 </div>
             </div>
         </form>
+    </div>
+</div>
+<div class="modal fade" id="delete-conform-modal" tabindex="-1" role="dialog" aria-labelledby="deleteRoom" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                Are you sure?
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-primary" id="btn-delete-room-confirm">Delete</button>
+                <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+            </div>
+        </div>
     </div>
 </div>

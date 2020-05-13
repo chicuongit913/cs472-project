@@ -4,7 +4,10 @@ $(document).ready(function () {
     getListRoom();
     $("#form-new-room").on("submit",uploadImage);
     initUploadFile();
-    $("#tbl-list-room").on("click", ".btn-edit-room", editRoom)
+    $("#tbl-list-room").on("click", ".btn-edit-room", editRoom);
+    $("#tbl-list-room").on("click", ".btn-delete-room", openModalConfirmDeleteRoom);
+    $("#btn-open-modal-new-form").on("click", resetForm);
+    $("#btn-delete-room-confirm").on("click", deleteRoom);
 });
 
 function getListRoom() {
@@ -28,12 +31,22 @@ function getListRoom() {
 function editRoom() {
     $("#tbl-list-room tbody").waitMe();
     let roomId = $(this).data("room-id");
-    $.ajax("/hotel/api/room?room-id="+roomId,
+    $.ajax("/hotel/api/room?roomId="+roomId,
         {
             type: "GET"
         }
     ).done(function (data) {
-        console.log(data);
+        let modalForm = $("#modal-new-room");
+        modalForm.modal();
+        modalForm.find(".modal-title").html("Edit Room:" + data.number)
+        modalForm.find("#roomId").val(data.id);
+        modalForm.find("#number").val(data.number);
+        modalForm.find("#type").val(data.type);
+        modalForm.find("#price").val(data.price);
+        modalForm.find("#description").html(data.description);
+        modalForm.find("#image").val(data.image);
+        modalForm.find("#room-image").removeClass("hide").attr("src", data.image);
+
     }).fail(function () {
         console.log("something went wrong!")
     }).always(function() {
@@ -76,11 +89,9 @@ function addNewRoom() {
     }).fail(function () {
         console.log("something went wrong!")
     }).always(function() {
-        document.getElementById("form-new-room").reset();
-        submitButton.text("Submit");
         $("#modal-new-room").modal("hide");
         formRoom.find(".modal-body").waitMe("hide");
-        $("#room-image").removeClass("hide");
+        resetForm();
     });
 }
 
@@ -91,6 +102,15 @@ function getNewRoomData(that) {
         roomData[n['name']] = n['value'];
     });
     return roomData;
+}
+
+function resetForm() {
+    let formRoom = $("#form-new-room");
+    let submitButton = formRoom.find("button[type='submit']");
+    document.getElementById("form-new-room").reset();
+    submitButton.text("Submit");
+    $("#room-image").removeClass("hide");
+    $("#modal-new-room").find(".modal-title").html("New Room Form");
 }
 
 function initUploadFile() {
@@ -133,4 +153,36 @@ function uploadImage(e) {
     else
         addNewRoom();
     return false;
+}
+
+function openModalConfirmDeleteRoom() {
+    $("#delete-conform-modal").modal();
+    let roomId = $(this).data("room-id");
+    $("#delete-conform-modal #btn-delete-room-confirm").data("roomId", roomId);
+}
+
+function deleteRoom() {
+    $("#tbl-list-room tbody").waitMe();
+    let roomId = $(this).data("room-id");
+    $.ajax("/hotel/api/room?action=delete&roomId="+roomId,
+        {
+            "crossDomain": true,
+            "method": "POST",
+            "headers": {
+                "Content-Type": "application/json",
+                "cache-control": "no-cache"
+            },
+            "processData": false,
+            "data": {},
+            "dataType": "json"
+        }
+    ).done(function (data) {
+        $("#tbl-list-room tbody").waitMe("hide");
+        getListRoom();
+    }).fail(function () {
+        console.log("something went wrong!")
+    }).always(function() {
+        $("#tbl-list-room tbody").waitMe("hide");
+        $("#tbl-list-room tbody").removeClass("emptyBody");
+    });
 }

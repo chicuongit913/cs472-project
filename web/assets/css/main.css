@@ -1768,7 +1768,7 @@ ul.activity-timeline > li {
     margin-top: 30px;
   }
 
-  input#image {
+  input#image, input#roomId {
     visibility: hidden;
   }
 
@@ -1787,6 +1787,8 @@ ul.activity-timeline > li {
   left: 0;
   z-index: 1;
   max-height: 155px;
+  top: 30px;
+  border-radius: 3px;
 }
 
 /*# sourceMappingURL=main.css.map */

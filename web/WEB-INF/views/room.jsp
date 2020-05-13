@@ -11,7 +11,7 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">List Room</h3>
                     <div class="right">
-                        <button type="button" data-toggle="modal" data-target="#modal-new-room"  class="btn btn-primary"><i class="lnr lnr-plus-circle"></i> New Room</button>
+                        <button id="btn-open-modal-new-form" type="button" data-toggle="modal" data-target="#modal-new-room"  class="btn btn-primary"><i class="lnr lnr-plus-circle"></i> New Room</button>
                     </div>
                 </div>
                 <div class="panel-body no-padding" style="display: block;">
