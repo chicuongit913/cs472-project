@@ -1,31 +1,35 @@
-<%@taglib prefix="template" tagdir="/WEB-INF/tags"%>
+<%@taglib prefix="template" tagdir="/WEB-INF/tags" %>
 
 <template:layout>
     <jsp:attribute name="javascript">
-        <script src="./assets/js/guest.js" type="text/javascript"></script>
-        <script src="./assets/js/klorofil-common.js" type="text/javascript"></script>
+        <script src="${pageContext.request.contextPath}/assets/js/guest.js" type="text/javascript"></script>
+        <script src="${pageContext.request.contextPath}/assets/js/klorofil-common.js" type="text/javascript"></script>
     </jsp:attribute>
 
     <jsp:body>
         <div class="container-fluid">
-            <div class="row" >
-                <div class="col-12" >
-                    <h1 id="homepage-header" class="display-4 pt-3 pb-3 float-left border-0">Guest</h1>
-                    <button data-toggle="modal" data-target="#add-guest" class="btn btn-outline-info mt-4 btn-lg float-right">Create New Guest</button>
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Guest List</h3>
+                    <div class="right">
+                        <button type="button" data-toggle="modal" data-target="#new-guest-modal"
+                                class="btn btn-primary">
+                            <i class="lnr lnr-plus-circle"></i>New Guest
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-12" >
-                    <table id="tbl-list-guest" class="table">
+                <div class="panel-body no-padding" style="display: block;">
+                    <table id="tbl-list-guest" class="table table-striped">
                         <thead>
                         <tr>
-                            <th scope="col">Id</th>
-                            <th scope="col">Fist Name</th>
-                            <th scope="col">Last Name</th>
-                            <th scope="col">Address</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Phone Number</th>
-                            <th scope="col">Date Of Birth</th>
+                            <th>Id</th>
+                            <th>Fist Name</th>
+                            <th>Last Name</th>
+                            <th>Address</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>Date Of Birth</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -33,9 +37,15 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-6"><span class="panel-note"><i class="fa fa-clock-o"></i>All Guests</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <%@include file="new-guest.jsp"%>
+        <%@include file="new-guest.jsp" %>
         <script type="text/template" id="row-guest-template">
             {{#each items}}
             <tr>
@@ -46,6 +56,12 @@
                 <td>{{email}}</td>
                 <td>{{phoneNumber}}</td>
                 <td>{{dob}}</td>
+                <td>
+                    <button data-room-id="{{id}}" class="btn btn-sm btn-info"><i class="lnr lnr-pencil"></i>Edit
+                    </button>
+                    <button data-room-id="{{id}}" class="btn btn-sm btn-danger"><i class="lnr lnr-trash"></i>Delete
+                    </button>
+                </td>
             </tr>
             {{/each}}
         </script>

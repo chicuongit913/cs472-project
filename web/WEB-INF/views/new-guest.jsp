@@ -1,4 +1,4 @@
-<div class="modal fade" id="add-guest" tabindex="-1" role="dialog" aria-labelledby="addGuest" aria-hidden="true">
+<div class="modal fade" id="new-guest-modal" tabindex="-1" role="dialog" aria-labelledby="addGuest" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <form id="new-guest">
             <div class="modal-content">
@@ -42,10 +42,8 @@
                                  style="width: 100%">
                             </div>
                         </div>
-                        <button type="reset" class="btn btn-outline-danger" data-dismiss="modal">Reset
-                        </button>
                         <button type="submit" class="btn btn-outline-primary">Save</button>
-                        <button type="button" class="btn btn-outline-danger" aria-label="Close" aria-hidden="true" data-dismiss="modal">Close</button>
+                        <button type="reset" class="btn btn-outline-danger" aria-label="Close" aria-hidden="true" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>

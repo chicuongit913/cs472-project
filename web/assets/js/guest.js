@@ -2,10 +2,17 @@
 $(document).ready(function () {
     getGuestList();
     $("#new-guest").on("submit", addNewGuest);
+    $("#new-booking-modal").on("shown.bs.modal", function () {
+        getGuestList();
+    });
+    $("#new-guest [type='reset']").on("click", function(){
+        $("#new-guest")[0].reset();
+        //document.getElementById("new-guest").reset();
+    });
 });
 
 function getGuestList() {
-    $.ajax("http://127.0.0.1:8080/hotel/api/guest",
+    $.ajax("api/guest",
         {
             type: "GET"
         }
@@ -34,7 +41,7 @@ function addNewGuest(e) {
     let submitButton = that.find("button[type='submit']");
     submitButton.text("Saving...");
     progressBar.removeClass("hide");
-    $.ajax("http://127.0.0.1:8080/hotel/api/guest",
+    $.ajax("api/guest",
         {
             "crossDomain": true,
             "method": "POST",
