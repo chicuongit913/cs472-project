@@ -31,14 +31,14 @@ function getListBooking() {
         }
     ).done(function (data) {
         $("#tbl-list-booking tbody").html(generateListBooking(data));
-        $("button.delete-booking").click(function () {
+        $("button.btn-delete-booking").click(function () {
             const that = $(this);
             const tr = that.parents("tr");
             const tdId = tr.find("td")[0];
             const id = $(tdId).html();
             console.log(id);
         });
-        $("button.update-booking").click(function () {
+        $("button.btn-edit-booking").click(function () {
             const that = $(this);
             $("#new-booking-modal").modal("show");
         })
@@ -114,16 +114,16 @@ function notification(type, header, content) {
 
     switch (type) {
         case 'info':
-            toastr.info(content, header);
+            // toastr.info(content, header);
             break;
         case 'success':
-            toastr.success(content, header);
+            // toastr.success(content, header);
             break;
         case 'warning':
-            toastr.warning(content, header);
+            // toastr.warning(content, header);
             break;
         case 'error':
-            toastr.error(content, header);
+            // toastr.error(content, header);
             break;
     }
 }

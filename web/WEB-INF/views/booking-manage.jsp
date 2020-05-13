@@ -15,15 +15,15 @@
 
     <jsp:body>
         <div class="container-fluid">
-            <div class="row" >
-                <div class="col-12" >
-                    <h1 id="homepage-header" class="display-4 pt-3 pb-3 float-left border-0">Booking</h1>
-                    <button data-toggle="modal" data-target="#new-booking-modal" class="btn btn-outline-info mt-4 btn-sm float-right">New Booking</button>
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">List Booking</h3>
+                    <div class="right">
+                        <button id="btn-open-modal-new-form" type="button" data-toggle="modal" data-target="#new-booking-modal"  class="btn btn-primary"><i class="lnr lnr-plus-circle"></i> New Booking</button>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-12" >
-                    <table id="tbl-list-booking" class="table">
+                <div class="panel-body no-padding" style="display: block;">
+                    <table id="tbl-list-booking" class="table table-striped">
                         <thead>
                         <tr>
                             <th scope="col">Confirm#</th>
@@ -37,7 +37,6 @@
                         </tr>
                         </thead>
                         <tbody>
-
                         </tbody>
                     </table>
                 </div>
@@ -55,10 +54,8 @@
                 <td>{{numberOfNight}}</td>
                 <td>{{totalPrice}}$</td>
                 <td>
-                    <button type="button" class="btn btn-primary update-booking">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
-                    <button type="button" class="btn btn-danger delete-booking">
-                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                    <button data-booking-id="{{id}}" class="btn btn-edit-booking btn-sm btn-info"><i class="lnr lnr-pencil"></i> Edit </button>
+                    <button data-booking-id="{{id}}" class="btn btn-delete-booking btn-sm btn-danger"><i class="lnr lnr-trash"></i> Delete </button>
                 </td>
             </tr>
             {{/each}}
