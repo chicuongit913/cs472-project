@@ -1,4 +1,4 @@
-<div class="modal fade" id="add-book" tabindex="-1" role="dialog" aria-labelledby="addBook" aria-hidden="true">
+<div class="modal fade" id="new-booking-modal" tabindex="-1" role="dialog" aria-labelledby="addBook" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <form id="new-booking">
             <div class="modal-content">
@@ -53,13 +53,7 @@
                             <button class="btn btn-primary dropdown-toggle"
                                     type="button" data-toggle="dropdown">Find Room<span class="caret"></span></button>
                             <ul class="dropdown-menu">
-                                <input class="form-control" id="findRoom" type="text" placeholder="Search.."/>
-                                <li><a href="#">1001</a></li>
-                                <li><a href="#">2001</a></li>
-                                <li><a href="#">3002</a></li>
-                                <li><a href="#">4001</a></li>
-                                <li><a href="#">5002</a></li>
-                                <li><a href="#">1002</a></li>
+                            <%-- contented redered in javascript --%>
                             </ul>
                         </div>
                     </div>
