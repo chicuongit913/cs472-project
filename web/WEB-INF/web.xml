@@ -73,6 +73,28 @@
         <url-pattern>/api/booking</url-pattern>
     </servlet-mapping>
 
+    <!--    guest servlet    -->
+    <servlet>
+        <servlet-name>Guest</servlet-name>
+        <servlet-class>controllers.GuestController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Guest</servlet-name>
+        <url-pattern>/guest</url-pattern>
+    </servlet-mapping>
+
+    <!--    guest API servlet    -->
+    <servlet>
+        <servlet-name>GuestAPI</servlet-name>
+        <servlet-class>controllers.api.GuestAPI</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>GuestAPI</servlet-name>
+        <url-pattern>/api/guest</url-pattern>
+    </servlet-mapping>
+
     <!--    Filter Hit Count servlet    -->
     <filter>
         <filter-name>GateWayFilter</filter-name>
