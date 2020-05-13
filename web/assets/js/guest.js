@@ -23,8 +23,13 @@ function getGuestList() {
     });
 }
 
-function generateGuestList(data) {
+function generateGuestList(data) {console.log(data);
     if (data.length) {
+        for(let i=0;i<data.length;i++){
+            if(data[i]["dob"]){
+                data[i]["dob"] = data[i]["dob"].substr(0,12);
+            }
+        }
         let template = $("#row-guest-template").html();
         let compiledTemplate = Template7.compile(template);
         return compiledTemplate({"items": data});

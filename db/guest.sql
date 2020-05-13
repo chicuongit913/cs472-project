@@ -6,6 +6,6 @@ CREATE TABLE `guest` (
   `address` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `phoneNumber` varchar(255) DEFAULT NULL,
-  `dob` DATETIME DEFAULT NULL,
+  `dob` DATE DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
