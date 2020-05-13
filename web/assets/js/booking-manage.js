@@ -1,19 +1,10 @@
 "use strict";
 $(document).ready(function () {
     getListBooking();
-
     $("#new-booking").on("submit",addNewBooking);
-    $("#findRoom").on("keyup", function() {
-        let value = $(this).val().toLowerCase();
-        $(".dropdown-menu li").filter(function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
+    $("#new-booking-modal").on("shown.bs.modal", function () {
+       getListOfRoom();
     });
-    $(".dropdown.find-room ul.dropdown-menu li a").click(function(){
-        const val = $(this).html();
-        $("#roomNumber").val(val);
-    });
-
     $("#searchGuest").on("keyup", function() {
         let value = $(this).val().toLowerCase();
         $(".dropdown-menu li").filter(function() {
@@ -24,6 +15,13 @@ $(document).ready(function () {
         const val = $(this).html();
         $("#guestID").val(val);
     });
+
+    $("#checkOut").change(function (e) {
+        let bookingData = {};
+        bookingData.checkIn = $("#checkIn").val();
+        bookingData.checkOut = $("#checkOut").val();
+        validationForm(bookingData);
+    })
 });
 
 function getListBooking() {
@@ -34,7 +32,7 @@ function getListBooking() {
     ).done(function (data) {
         $("#tbl-list-booking tbody").html(generateListBooking(data));
     }).fail(function () {
-        console.log("something went wrong!")
+        notification('error', 'Loading Booking Failed', 'Something went wrong! Please check the connection');
     });
 }
 
@@ -44,13 +42,17 @@ function generateListBooking(data) {
         let compiledTemplate = Template7.compile(template);
         return compiledTemplate({"items": data});
     } else {
-        return "<td> No Book on collection </td>";
+        return "<td> (empty) </td>";
     }
 }
 
 function addNewBooking(e) {
     e.preventDefault();
     let bookingData = getNewBookingData($(this));
+    if (!validationForm(bookingData)) {
+        return  false;
+    }
+
     let that = $(this);
     let progressBar = that.find(".modal-footer .progress");
     let submitButton = that.find("button[type='submit']");
@@ -70,12 +72,11 @@ function addNewBooking(e) {
         }
     ).done(function (data) {
         $("#tbl-list-book tbody").html(getListBooking());
-        nofitication('success', 'Booking Added', 'Successfully');
+        $("#new-booking").trigger("reset");
+        notification('success', 'Booking Added', 'Successfully');
     }).fail(function () {
-        console.log("something went wrong!")
-        nofitication('error', 'Booking Failed', 'Something went wrong!');
+        notification('error', 'Booking Failed', 'Something went wrong! Please check the booking data');
     }).always(function() {
-        document.getElementById("new-booking").reset();
         progressBar.addClass("hide");
         submitButton.text("Save");
     });
@@ -91,7 +92,7 @@ function getNewBookingData(that) {
     return bookData;
 }
 
-function nofitication(type, header, content) {
+function notification(type, header, content) {
     toastr.options.closeButton = true;
     toastr.options.closeMethod = 'fadeOut';
     toastr.options.closeDuration = 300;
@@ -105,4 +106,72 @@ function nofitication(type, header, content) {
         case 'warning': toastr.warning(content, header); break;
         case 'error': toastr.error(content, header); break;
     }
+}
+
+function validationForm(bookingData) {
+    if (new Date(bookingData.checkOut) < new Date(bookingData.checkIn)) {
+        notification('error', 'Check-out date invalid', 'Check-out date is later than check-in date');
+        return false;
+    }
+}
+
+function getListOfRoom() {
+    $.ajax("http://127.0.0.1:8080/hotel/api/room",
+        {
+            type: "GET"
+        }
+    ).done(function (data) {
+        initialRoomInputGroup(data);
+
+    }).fail(function () {
+        notification('error', 'Loading Rooms Failed', 'Something went wrong! Please check the connection');
+    });
+}
+
+function generateListOfRoom(data) {
+    if(data.length) {
+        let template = $("#row-room-template").html();
+        let compiledTemplate = Template7.compile(template);
+        return compiledTemplate({"items": data});
+    } else {
+        return "<li><a href='#'>empty</a></li>";
+    }
+}
+
+function initialRoomInputGroup(data) {
+    const handleRoomSelection = (new Promise(function (resolve, reject) {
+        const inputSearch = `
+                            <input class="form-control" id="findRoom" type="text" placeholder="Search.."/>
+                            <script type="text/template" id="row-room-template">
+                                {{#each items}}
+                                <li><a href="#">{{number}}</a></li>
+                                {{/each}}
+                            </script>`;
+        const dropdownMenuFindRoom = $(".dropdown.find-room ul.dropdown-menu");
+        dropdownMenuFindRoom.html("");
+        dropdownMenuFindRoom.append(inputSearch);
+        dropdownMenuFindRoom.append(generateListOfRoom(data));
+        $("#findRoom").on("keyup", function() {
+            let value = $(this).val().toLowerCase();
+            $(".dropdown-menu li").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+        if ($(".dropdown.find-room ul.dropdown-menu li a").length > 0) {
+            resolve(true);
+        } else {
+            reject(true);
+        }
+    }));
+    handleRoomSelection.then(function (resolve) {
+        if(resolve) {
+            $(".dropdown.find-room ul.dropdown-menu li a").click(function(){
+                const val = $(this).html();
+                $("#roomNumber").val(val);
+            });
+        }
+    }, function (rejectedResult) {
+        if(rejectedResult) {}
+        notification("error", "ERROR", "Loading room failed");
+    });
 }

@@ -18,7 +18,7 @@
             <div class="row" >
                 <div class="col-12" >
                     <h1 id="homepage-header" class="display-4 pt-3 pb-3 float-left border-0">Booking</h1>
-                    <button data-toggle="modal" data-target="#add-book" class="btn btn-outline-info mt-4 btn-lg float-right">New Booking</button>
+                    <button data-toggle="modal" data-target="#new-booking-modal" class="btn btn-outline-info mt-4 btn-sm float-right">New Booking</button>
                 </div>
             </div>
             <div class="row">
